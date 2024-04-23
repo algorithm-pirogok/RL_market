@@ -1,0 +1,8 @@
+gymnasium
+gym
+matplotlib
+numpy
+pandas
+torch
+tqdm
+sortedcontainers
