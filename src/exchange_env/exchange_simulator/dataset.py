@@ -2,8 +2,8 @@ import pandas as pd
 
 
 class ExchangeDataset:
-    def __init__(self, name: str, start_time: int = None, green_stocks = None, red_stocks = None) -> None:
-        self._logs = pd.read_csv(f"data/csv/{name}").drop(columns=['ORDERNO', 'TRADENO', 'TRADEPRICE'])
+    def __init__(self, path: str, start_time: int = None, green_stocks = None, red_stocks = None) -> None:
+        self._logs = pd.read_csv(f"data/csv/{path}").drop(columns=['ORDERNO', 'TRADENO', 'TRADEPRICE'])
         self.find_anomaly_and_fix()
         self._logs = self._logs[self._logs.ACTION != 2]
         if start_time is not None:
