@@ -42,3 +42,4 @@ class Exchange:
             ask_volumes.append(a)
             bid_volumes(b)
             trades_logs.extend(t)
+        return ask_volumes, bid_volumes, trades_logs
