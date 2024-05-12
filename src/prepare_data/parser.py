@@ -2,7 +2,7 @@ import argparse
 import pandas as pd
 
 def get_stats(name_of_file) -> None:
-    data = pd.read_csv('data/csv/{name_of_file}')
+    data = pd.read_csv(f"data/csv/{name_of_file}")
     data = data[data.ACTION == 2].drop(columns=['ACTION', 'NO', 'TRADENO', 'TRADEPRICE', 'ORDERNO'])
     data['HOUR'] = data.TIME.apply(lambda x: int(str(x)[:2]))
     data['MINUTE'] = data.TIME.apply(lambda x: int(str(x)[2:4]))
@@ -15,9 +15,20 @@ def get_stats(name_of_file) -> None:
         df.fillna({col: 0 for col in ['PRICE_std', 'PRICE_sum', 'PRICE_count', 'VOLUME_mean', 'VOLUME_sum', 'VOLUME_std', 'VOLUME_count']}, inplace=True)
         df['PRICE_mean'] = df['PRICE_mean'].ffill().bfill()
         df = df.reset_index()
+        df = df.groupby(['SECCODE', period]).agg({'PRICE_mean': ['min', 'max'],
+                                     'PRICE_sum': 'sum', 
+                                     'PRICE_std': 'mean', 
+                                     'PRICE_count': 'sum',
+                                     'VOLUME_mean': 'mean',
+                                     'VOLUME_sum': 'sum',
+                                     'VOLUME_std': 'mean'
+                                     })
+        df.columns = [f'{cat}_{stat}' for cat, stat in df.columns]
+        df = df.reset_index()
         df.to_csv(f'data/statistics/{name_of_file}_{period}.csv')
-    print('Stats computed')
-
+        return df
+    print("Stats computed")
+    
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Simple example with argparse.')
