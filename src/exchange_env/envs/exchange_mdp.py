@@ -40,11 +40,6 @@ class ExhangeMDP:
         """
         Change enviroment with actions
         """
-        # прокрути заявки на биржу, затем посмотри, что изменилось. Го отсюда начинать..
-        # То есть нам нужно прокручивать все торги на бирже до тех пор, пока не пройдет  
-        # action (seccode, cancel) + (seccode, type, price, volume)
-        #нужно добавить итератор и затем крутить заявки до того времени, пока не дойдут до нашего timestamps.
-        #после чего добавляем на биржу все наши ордера и возвращаем заявки
         def transform_time_to_int(time):
             hour = int(str(time)[:2])
             minute = int(str(time)[2:4])
@@ -117,3 +112,7 @@ class ExhangeMDP:
         self._exchange.clear_logs()
         # нужно получить время, по времени получить статистики. Затем нужно завести логгер, который будет отслеживать статистику
         return self.history_volumes, self.history_prices, historical_stats, values, orders_info, ost_time
+
+# работаю
+# пишу курсовую
+# пишу trainer

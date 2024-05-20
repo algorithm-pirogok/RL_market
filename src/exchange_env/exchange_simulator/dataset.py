@@ -31,7 +31,7 @@ class ExchangeDataset:
         elif mode == 'HALF_OF_HOUR':
             return hour * 2 + (minute >= 30), minute % 30
         elif mode == 'QUARTER_OF_HOUR':
-            return hour * 4 + minute // 4, minute % 15
+            return hour * 4 + minute // 15, minute % 15
 
     def _convert_time(self, x: str):
         return (int(x[0:2]) * 3600 + int(x[2:4]) * 60 + int(x[4:6])) * pow(10, len(x[6:])) + int(x[6:])
